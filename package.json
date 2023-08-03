@@ -5,6 +5,9 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "drop": "env $(cat .env) npx sequelize-cli db:drop",
+    "seed": "env $(cat .env) npx sequelize-cli db:seed:all",
+    "predev": "env $(cat .env) npx sequelize-cli db:create && env $(cat .env) npx sequelize-cli db:migrate",
     "dev": "nodemon ."
   },
   "keywords": [],
