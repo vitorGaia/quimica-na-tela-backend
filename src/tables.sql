@@ -19,6 +19,8 @@ CREATE TABLE news (
   image VARCHAR(250),
   link_reference_1 VARCHAR(250),
   link_reference_2 VARCHAR(250),
+  published DATETIME,
+  updated DATETIME,
   user_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
@@ -33,6 +35,8 @@ CREATE TABLE support_materials (
   title VARCHAR(200) NOT NULL,
   `description` VARCHAR(3000) NOT NULL,
   `url` VARCHAR(250) NOT NULL,
+  published DATETIME,
+  updated DATETIME,
   category_id INT NOT NULL,
   FOREIGN KEY (category_id) REFERENCES support_material_categories (material_category_id)
 );
@@ -48,6 +52,26 @@ CREATE TABLE podcasts (
   `number` INT NOT NULL,
   `description` VARCHAR(3000) NOT NULL,
   `url` VARCHAR(250) NOT NULL,
+  published DATETIME,
+  updated DATETIME,
   category_id INT NOT NULL,
   FOREIGN KEY (category_id) REFERENCES podcast_categories (podcast_category_id)
+);
+
+CREATE TABLE categories_intermediary (
+  category_id INT,
+  category_type ENUM('support_material', 'podcast'),
+  PRIMARY KEY (category_id, category_type),
+  FOREIGN KEY (category_id) REFERENCES support_material_categories (material_category_id),
+  FOREIGN KEY (category_id) REFERENCES podcast_categories (podcast_category_id)
+);
+
+CREATE TABLE coments (
+  coment_id INT PRIMARY KEY AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  category_type ENUM('support_material', 'podcast') NOT NULL,
+  category_id INT NOT NULL,
+  content VARCHAR(3000) NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users (user_id),
+  FOREIGN KEY (category_id, category_type) REFERENCES categories_intermediary (category_id, category_type)
 );
