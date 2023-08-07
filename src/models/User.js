@@ -27,10 +27,10 @@ const UserSchema = (sequelize, DataTypes) => {
   },
   { tableName: 'users', timestamps: false, underscored: true });
 
-  // User.associate = (models) => {
-  //   User.hasMany(models.New, { foreignKey: 'userId', as: 'news' })
-  //   User.hasMany(models.Comment, { foreignKey: 'userId', as: 'comments' })
-  // };
+  User.associate = (models) => {
+    User.hasMany(models.New, { foreignKey: 'userId', as: 'news' })
+    User.hasMany(models.Comment, { foreignKey: 'userId', as: 'comments' })
+  };
 
   return User;
 };
